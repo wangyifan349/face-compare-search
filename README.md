@@ -191,3 +191,21 @@ You may use, study, modify, and redistribute the program under the license terms
 This project would not be possible without the work of the open-source community. We sincerely thank [Flask](https://flask.palletsprojects.com/) for providing the lightweight web framework, routing, request handling, and application foundation; [Flask-HTTPAuth](https://flask-httpauth.readthedocs.io/) for providing HTTP Digest Authentication used to protect face enrollment and deletion operations; [face_recognition](https://face-recognition.readthedocs.io/) for providing the high-level APIs used to detect faces, generate 128-dimensional face encodings, calculate face distances, and compare facial features; [dlib](https://dlib.net/) for providing the underlying machine-learning models, CNN face detector, facial landmark processing, and face-recognition capabilities used by `face_recognition`; [Pillow](https://pillow.readthedocs.io/) for validating uploaded images, reading image files, handling EXIF orientation, and converting images into the RGB format required for recognition; [NumPy](https://numpy.org/) for efficient numerical arrays and face-vector processing; and [SQLite](https://www.sqlite.org/) for providing a lightweight, reliable, and serverless database for storing names, image filenames, face encodings, and creation times.
 
 🌍 We are deeply grateful to the developers, maintainers, contributors, documentation writers, testers, users, and the wider open-source community for sharing their knowledge and software so that projects such as Face Compare and Search can be developed, studied, improved, and shared with others.
+
+## ❤️ Support This Project
+
+If this project is useful to you, your support would mean a lot! 🙏
+
+This is a powerful **face comparison and face search project** that supports face matching, face searching, and custom face data management. You can upload your own face data, organize and manage face databases, and use it for various face recognition workflows.
+
+If this project helps you, please consider sponsoring its development. Your support helps us improve features, maintain the project, and continue making it better. 🚀
+
+### ₿ Bitcoin Donation
+
+```text
+bc1qymelsaghkfw992ee2tyzz0ph8xcy33u3gs7jl5
+````
+
+Thank you for your support! ❤️
+
+```
