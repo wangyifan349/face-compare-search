@@ -13,12 +13,14 @@ git clone https://github.com/wangyifan349/face-compare-search.git
 cd face-compare-search
 pip install flask flask-httpauth pillow numpy face-recognition
 python -c "import dlib, face_recognition; print('Dependencies are ready')"
+# To use the English edition instead, stop the Chinese edition and run:
+python face_compare_search_en.py
+
+python -c "import dlib; print('===== dlib CUDA Detection ====='); print('CUDA Support:', dlib.DLIB_USE_CUDA); gpu_count = dlib.cuda.get_num_devices() if dlib.DLIB_USE_CUDA else 0; print('GPU Count:', gpu_count); [print('GPU %d:' % i, dlib.cuda.get_device_name(i)) for i in range(gpu_count)] if dlib.DLIB_USE_CUDA else None"
+
 
 # Start the Chinese edition
 python face_compare_search_zh.py
-
-# To use the English edition instead, stop the Chinese edition and run:
-# python face_compare_search_en.py
 ```
 
 After the server starts, open:
