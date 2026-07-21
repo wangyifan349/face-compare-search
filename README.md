@@ -204,8 +204,5 @@ If this project helps you, please consider sponsoring its development. Your supp
 
 ```text
 bc1qymelsaghkfw992ee2tyzz0ph8xcy33u3gs7jl5
-````
-
-Thank you for your support! ❤️
-
 ```
+Thank you for your support! ❤️
