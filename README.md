@@ -14,12 +14,15 @@ cd face-compare-search
 pip install flask flask-httpauth pillow numpy face-recognition
 python -c "import dlib, face_recognition; print('Dependencies are ready')"
 
-# Start the Chinese edition
-python face_compare_search_zh.py
+
 
 # To use the English edition instead, stop the Chinese edition and run:
 # python face_compare_search_en.py
 ```
+
+# Start the Chinese edition
+python face_compare_search_zh.py
+
 
 After the server starts, open:
 
@@ -184,4 +187,6 @@ This project is licensed under the GNU Affero General Public License version 3.0
 
 You may use, study, modify, and redistribute the program under the license terms. If you distribute modified versions, you must preserve the applicable notices and provide the corresponding source as required by the license. If you modify the program and make that modified version available to users over a computer network, GNU AGPLv3 requires that those remote users be offered access to the corresponding source of the version running on the server.
 
-Third-party Python packages are distributed under their own licenses and are not relicensed by this repository.
+## Acknowledgements
+
+💛 This project would not be possible without the work of the open-source community. We sincerely thank [Flask](https://flask.palletsprojects.com/) for providing the lightweight web framework, routing, request handling, and application foundation; [Flask-HTTPAuth](https://flask-httpauth.readthedocs.io/) for providing HTTP Digest Authentication used to protect face enrollment and deletion operations; [face_recognition](https://face-recognition.readthedocs.io/) for providing the high-level APIs used to detect faces, generate 128-dimensional face encodings, calculate face distances, and compare facial features; [dlib](https://dlib.net/) for providing the underlying machine-learning models, CNN face detector, facial landmark processing, and face-recognition capabilities used by `face_recognition`; [Pillow](https://pillow.readthedocs.io/) for validating uploaded images, reading image files, handling EXIF orientation, and converting images into the RGB format required for recognition; [NumPy](https://numpy.org/) for efficient numerical arrays and face-vector processing; and [SQLite](https://www.sqlite.org/) for providing a lightweight, reliable, and serverless database for storing names, image filenames, face encodings, and creation times. 🌍 We are deeply grateful to the developers, maintainers, contributors, document writers, testers, and users behind these projects, and to the wider open-source community for sharing their knowledge and software so that projects like Face Compare and Search can be developed, studied, improved, and shared with others.
