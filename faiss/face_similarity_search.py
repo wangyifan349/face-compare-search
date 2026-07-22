@@ -1,8 +1,15 @@
 """
-1:N Face Similarity Comparison
-This script compares one query face image with all images in a target
-directory and its subdirectories. Results are sorted by similarity
-in descending order.
+Interactive Face Search
+
+This script performs a 1:N face similarity search using InsightFace.
+
+At startup, enter the directory containing the reference face images.
+The script scans that directory and all its subdirectories with os.walk(),
+extracts the face embeddings, and stores them in memory.
+After the face database is loaded, you can repeatedly enter query image
+paths. Each query face is compared with all reference faces, and the
+results are displayed from highest to lowest cosine similarity.
+Enter "exit" or "quit" to close the program.
 Install dependencies:
     pip install opencv-python numpy insightface onnxruntime
 """
@@ -10,73 +17,91 @@ import os
 import cv2
 import numpy as np
 from insightface.app import FaceAnalysis
-# Supported image file extensions
+# Image formats included when scanning the reference directory
 SUPPORTED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
-# Load the InsightFace face recognition model
+# Initialize the InsightFace model
 face_analyzer = FaceAnalysis(
     name="buffalo_l",
     providers=["CPUExecutionProvider"],
 )
-# Use CPU for model inference
+# ctx_id=-1 selects CPU inference
 face_analyzer.prepare(ctx_id=-1)
-
-def get_embedding(image_path):
-    """Extract the normalized face embedding from an image."""
+def get_face_embedding(image_path):
+    """Return the normalized embedding of the first detected face."""
     image = cv2.imread(image_path)
     if image is None:
-        raise ValueError(f"Could not read image: {image_path}")
-    faces = face_analyzer.get(image)
-    if not faces:
+        raise ValueError(f"Unable to read image: {image_path}")
+    detected_faces = face_analyzer.get(image)
+    if not detected_faces:
         raise ValueError(f"No face detected: {image_path}")
-    # Use the first detected face
-    return faces[0].normed_embedding
-
-def collect_image_paths(directory_path):
-    """Recursively collect supported image files using os.walk."""
-    image_paths = []
-    for root_directory, _, file_names in os.walk(directory_path):
-        for file_name in file_names:
-            file_extension = os.path.splitext(file_name)[1].lower()
-            if file_extension in SUPPORTED_EXTENSIONS:
-                image_paths.append(
-                    os.path.join(root_directory, file_name)
-                )
-    return image_paths
-
-
-def compare_with_directory(query_image_path, target_directory):
-    """Compare one face image with all images in a directory."""
-    query_embedding = get_embedding(query_image_path)
-    comparison_results = []
-    # Recursively collect target images
-    target_image_paths = collect_image_paths(target_directory)
-    for target_image_path in target_image_paths:
+    return detected_faces[0].normed_embedding
+# Ask for the reference directory once
+while True:
+    reference_directory = input(
+        "Enter the reference image directory: "
+    ).strip().strip('"')
+    if os.path.isdir(reference_directory):
+        break
+    print("Invalid directory. Please try again.")
+# Scan the directory and build the face database
+face_database = []
+print("\nBuilding face database...")
+for current_directory, _, filenames in os.walk(reference_directory):
+    for filename in filenames:
+        extension = os.path.splitext(filename)[1].lower()
+        if extension not in SUPPORTED_EXTENSIONS:
+            continue
+        image_path = os.path.join(current_directory, filename)
         try:
-            target_embedding = get_embedding(target_image_path)
-            # The embeddings are normalized, so the dot product equals
-            # cosine similarity
-            similarity = float(
-                np.dot(query_embedding, target_embedding)
-            )
-            comparison_results.append(
-                (target_image_path, similarity)
-            )
+            embedding = get_face_embedding(image_path)
+            face_database.append((image_path, embedding))
+            print(f"Loaded: {image_path}")
         except ValueError as error:
             print(f"Skipped: {error}")
-    # Sort results from highest to lowest similarity
-    comparison_results.sort(
+if not face_database:
+    print("\nNo valid face images were found.")
+    raise SystemExit(1)
+print(f"\nFace database ready: {len(face_database)} image(s)")
+print('Enter "exit" or "quit" to stop the program.')
+# Continuously accept query images
+while True:
+    query_image_path = input(
+        "\nEnter a query image path: "
+    ).strip().strip('"')
+    if query_image_path.lower() in {"exit", "quit"}:
+        print("Program closed.")
+        break
+    if not os.path.isfile(query_image_path):
+        print("Invalid image path.")
+        continue
+    try:
+        query_embedding = get_face_embedding(query_image_path)
+    except ValueError as error:
+        print(f"Error: {error}")
+        continue
+    search_results = []
+    # Compare the query face with every face in the database
+    for reference_image_path, reference_embedding in face_database:
+        # Both embeddings are normalized, so their dot product is
+        # equivalent to cosine similarity
+        similarity = float(
+            np.dot(query_embedding, reference_embedding)
+        )
+        search_results.append(
+            (reference_image_path, similarity)
+        )
+    # Sort from the highest similarity to the lowest
+    search_results.sort(
         key=lambda result: result[1],
         reverse=True,
     )
-    return comparison_results
-
-#-----------------------------------
-# Compare one query image with all images in the target directory
-results = compare_with_directory(
-    query_image_path="path/to/query.jpg",
-    target_directory="path/to/faces",
-)
-#----------------------------------
-# Print ranked results
-for rank, (image_path, similarity) in enumerate(results, start=1):
-    print(f"{rank:03d}. {image_path}: {similarity:.4f}")
+    print("\nSearch results:")
+    for rank, (image_path, similarity) in enumerate(
+        search_results,
+        start=1,
+    ):
+        print(
+            f"{rank:03d}. "
+            f"{similarity:.4f} | "
+            f"{image_path}"
+        )
