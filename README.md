@@ -1,8 +1,10 @@
 # 👤 Face Compare and Search
 
-Face Compare and Search is a small Flask application that provides two browser pages in one standalone Python file: `/compare` compares two face images and displays a similarity score, while `/search` manages a local face library and searches one uploaded face against every stored encoding with AJAX progress updates.
+## 📖 Introduction
 
-This repository provides two complete editions of the same application. `face_compare_search_zh.py` contains the full Chinese interface and Chinese comments. `face_compare_search_en.py` contains the full English interface and English comments. Each file includes its own HTML, CSS, JavaScript, Flask routes, SQLite logic, HTTP Digest Authentication, image handling, face enrollment, comparison, and sequential search. No template, static, configuration, or language directories are required.
+Face Compare and Search is a compact, self-contained Flask application for local face comparison and face-library search. It provides two browser-based tools: `/compare` compares two uploaded images and returns a similarity score, while `/search` lets users enroll reference images, manage the local face library, and search an uploaded face against stored 128-dimensional encodings with live AJAX progress updates. 🔍
+
+The repository includes two standalone editions of the same application: `face_compare_search_zh.py` provides the Chinese interface and Chinese comments, while `face_compare_search_en.py` provides the English interface and English comments. Each file bundles its own HTML, CSS, JavaScript, Flask routes, SQLite storage, HTTP Digest administrator authentication, image handling, face enrollment, comparison, and sequential search logic. No separate templates, static assets, configuration files, or language directories are required. 📦
 
 ## 🚀 Download, Install, and Run
 
@@ -188,9 +190,26 @@ You may use, study, modify, and redistribute the program under the license terms
 
 ## 💛 Acknowledgements
 
-This project would not be possible without the work of the open-source community. We sincerely thank [Flask](https://flask.palletsprojects.com/) for providing the lightweight web framework, routing, request handling, and application foundation; [Flask-HTTPAuth](https://flask-httpauth.readthedocs.io/) for providing HTTP Digest Authentication used to protect face enrollment and deletion operations; [face_recognition](https://face-recognition.readthedocs.io/) for providing the high-level APIs used to detect faces, generate 128-dimensional face encodings, calculate face distances, and compare facial features; [dlib](https://dlib.net/) for providing the underlying machine-learning models, CNN face detector, facial landmark processing, and face-recognition capabilities used by `face_recognition`; [Pillow](https://pillow.readthedocs.io/) for validating uploaded images, reading image files, handling EXIF orientation, and converting images into the RGB format required for recognition; [NumPy](https://numpy.org/) for efficient numerical arrays and face-vector processing; and [SQLite](https://www.sqlite.org/) for providing a lightweight, reliable, and serverless database for storing names, image filenames, face encodings, and creation times.
+Face Compare and Search is built with the following open-source technologies:
 
-🌍 We are deeply grateful to the developers, maintainers, contributors, documentation writers, testers, users, and the wider open-source community for sharing their knowledge and software so that projects such as Face Compare and Search can be developed, studied, improved, and shared with others.
+### Direct dependencies
+
+- [Flask](https://flask.palletsprojects.com/) — provides the web application, URL routing, request handling, JSON responses, and embedded-page rendering.
+- [Flask-HTTPAuth](https://flask-httpauth.readthedocs.io/) — provides HTTP Digest Authentication for administrator-protected face enrollment and record deletion.
+- [face_recognition](https://face-recognition.readthedocs.io/) — provides the high-level APIs used to detect faces, generate 128-dimensional face encodings, and calculate Euclidean face distances.
+- [dlib](https://dlib.net/) — supplies the CNN face detector, facial-landmark models, and face-recognition model used through `face_recognition`.
+- [Pillow](https://pillow.readthedocs.io/) — validates uploaded images and performs in-memory EXIF orientation correction and RGB conversion.
+- [NumPy](https://numpy.org/) — handles image arrays, face-encoding vectors, and numerical data conversion.
+- [SQLite](https://www.sqlite.org/) — stores person names, reference-image filenames, serialized face encodings, and creation timestamps through Python's built-in `sqlite3` module.
+
+### Related computer-vision projects
+
+The following projects are useful references within the broader computer-vision and face-analysis ecosystem, but they are not imported or required by the current implementation:
+
+- [InsightFace](https://github.com/deepinsight/insightface) — an open-source project for 2D and 3D face analysis, including face detection, recognition, and alignment research and tooling.
+- [OpenCV](https://docs.opencv.org/) — a general-purpose computer-vision library for image and video processing, feature extraction, detection, and related workflows.
+
+🌍 We are grateful to the developers, maintainers, contributors, documentation authors, testers, users, and the wider open-source community whose work makes projects such as Face Compare and Search possible.
 
 ## ❤️ Support This Project
 

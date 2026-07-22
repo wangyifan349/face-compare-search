@@ -91,7 +91,7 @@ SEARCH_PAGE_CONTENT = """
 <section class="hero"><h1>Face Search</h1><p>Enroll reference faces, then upload a query image. The server compares database records sequentially while AJAX displays progress and results.</p></section>
 <section class="card">
 <h2>Face Library Management</h2><p class="card-description">Each record stores a person name, the original reference image, and a precomputed 128-dimensional encoding. One person may have multiple reference images.</p>
-<div class="authentication-panel"><div class="authentication-text">Face enrollment and deletion require HTTP Digest administrator authentication.</div><button id="authenticateButton" class="secondary-button" type="button">Administrator Login</button></div>
+<div class="authentication-panel"><button id="authenticateButton" class="secondary-button" type="button">Administrator Login</button></div>
 <div class="form-row"><input id="personName" class="text-input" type="text" maxlength="80" placeholder="Enter the person name"><input id="libraryFaceImage" class="compact-upload" type="file" accept="image/jpeg,image/png,image/webp"></div>
 <div class="action-row"><button id="addFaceButton" class="primary-button" type="button">Enroll Face</button><span id="libraryStatus" class="status-text"></span></div>
 <div class="section-divider"></div><div class="library-header"><h2>Enrolled Faces</h2><span id="libraryCount" class="library-count">0 reference images</span></div>
@@ -101,7 +101,7 @@ SEARCH_PAGE_CONTENT = """
 <h2>Sequential Face Search</h2><p class="card-description">The search compares saved face encodings in order and does not redetect faces in library images.</p>
 <div class="search-layout"><div><label id="searchPlaceholder" class="search-placeholder">Click to select an original query image<br>The image must contain exactly one clear face<input id="searchFaceImage" type="file" accept="image/jpeg,image/png,image/webp"></label><img id="searchPreview" class="search-preview" alt="Query image preview"><div class="action-row"><button id="startSearchButton" class="primary-button" type="button">Start Sequential Search</button></div></div>
 <div><div id="searchMessage" class="status-text">Waiting to start</div><div id="progressArea" class="progress-area"><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div><div class="progress-meta"><span id="progressText">0 / 0</span><span id="progressPercentage">0%</span></div><div id="currentPerson" class="current-person"></div></div><div id="searchResults" class="result-list"></div></div></div>
-<p class="notice">Results are ranked by similarity only and do not include a match decision. Production identity verification should add liveness detection and human review.</p>
+<p class="notice">Results are sorted in descending order by face-comparison similarity calculated by the CNN model.</p>
 </section>
 """
 

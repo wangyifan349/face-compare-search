@@ -91,7 +91,7 @@ SEARCH_PAGE_CONTENT = """
 <section class="hero"><h1>人脸搜索</h1><p>先录入参考人脸，再上传查询照片。后台会按数据库顺序逐条计算相似度，页面使用 AJAX 显示进度和结果。</p></section>
 <section class="card">
 <h2>人脸库管理</h2><p class="card-description">每条记录保存姓名、原始参考图片和预先提取的 128 维特征；同一人员可录入多张参考照片。</p>
-<div class="authentication-panel"><div class="authentication-text">录入和删除人脸需要 HTTP Digest 管理员认证。</div><button id="authenticateButton" class="secondary-button" type="button">管理员认证</button></div>
+<div class="authentication-panel"><button id="authenticateButton" class="secondary-button" type="button">管理员认证</button></div>
 <div class="form-row"><input id="personName" class="text-input" type="text" maxlength="80" placeholder="输入人员姓名"><input id="libraryFaceImage" class="compact-upload" type="file" accept="image/jpeg,image/png,image/webp"></div>
 <div class="action-row"><button id="addFaceButton" class="primary-button" type="button">录入人脸</button><span id="libraryStatus" class="status-text"></span></div>
 <div class="section-divider"></div><div class="library-header"><h2>已录入人员</h2><span id="libraryCount" class="library-count">0 条参考照片</span></div>
@@ -101,7 +101,7 @@ SEARCH_PAGE_CONTENT = """
 <h2>逐个人脸搜索</h2><p class="card-description">搜索阶段按顺序比较已经保存的人脸特征，不会重新检测人脸库中的图片。</p>
 <div class="search-layout"><div><label id="searchPlaceholder" class="search-placeholder">点击选择一张原始查询照片<br>照片中必须只有一张清晰人脸<input id="searchFaceImage" type="file" accept="image/jpeg,image/png,image/webp"></label><img id="searchPreview" class="search-preview" alt="查询照片预览"><div class="action-row"><button id="startSearchButton" class="primary-button" type="button">开始逐个搜索</button></div></div>
 <div><div id="searchMessage" class="status-text">等待开始搜索</div><div id="progressArea" class="progress-area"><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div><div class="progress-meta"><span id="progressText">0 / 0</span><span id="progressPercentage">0%</span></div><div id="currentPerson" class="current-person"></div></div><div id="searchResults" class="result-list"></div></div></div>
-<p class="notice">结果仅按相似度从高到低排列，不输出匹配结论。正式身份核验应增加活体检测和人工复核。</p>
+<p class="notice">结果按照 CNN 模型计算的人脸对比相似度降序排列。</p>
 </section>
 """
 
