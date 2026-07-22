@@ -1,4 +1,9 @@
-"""\nThis single-file Flask application provides separate face comparison and face search pages in one program. SQLite stores person names, original reference-image paths, and 128-dimensional face encodings. Search jobs compare database records sequentially in a background thread while AJAX polling reports live progress.\n\nThe application uses dlib CNN face detection and the face_recognition large encoding model. Uploaded images are stored byte-for-byte without resizing, cropping, format conversion, re-encoding, or compression. Enrolling and deleting face-library records requires HTTP Digest administrator authentication.\n"""
+"""
+This single-file Flask application provides browser-based face comparison and face-library search in one program.
+It compares two uploaded face images, manages a local reference library, and searches a query face against stored 128-dimensional encodings.
+Search records are processed sequentially in ascending database-ID order by a background thread, while AJAX polling reports live progress and ranked results.
+Face detection uses dlib's CNN model through face_recognition, and face encoding uses the large 68-point facial landmark model. Each uploaded image must contain exactly one detectable face. Image files are saved without resizing, cropping, format conversion, re-encoding, or compression; EXIF orientation correction and RGB conversion are applied only in memory during recognition. SQLite stores person names, reference-image filenames, JSON-encoded face vectors, and creation times. HTTP Digest authentication is required only when enrolling or deleting face-library records.
+"""
 
 from pathlib import Path
 from threading import Lock, Thread
