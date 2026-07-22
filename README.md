@@ -166,14 +166,11 @@ The Flask development server is suitable for local use and testing. Search-job s
 
 ```python
 import face_recognition
-
 image1 = face_recognition.load_image_file("face1.jpg")
 image2 = face_recognition.load_image_file("face2.jpg")
-
 # Detect faces with the CNN model
 locations1 = face_recognition.face_locations(image1, model="cnn")
 locations2 = face_recognition.face_locations(image2, model="cnn")
-
 # Generate 128-dimensional encodings using the 68-point model
 encoding1 = face_recognition.face_encodings(
     image1, locations1, model="large"
@@ -181,15 +178,18 @@ encoding1 = face_recognition.face_encodings(
 encoding2 = face_recognition.face_encodings(
     image2, locations2, model="large"
 )[0]
-
 # Calculate Euclidean face distance; smaller means more similar
 distance = face_recognition.face_distance([encoding1], encoding2)[0]
-
 print("Face distance:", distance)
 ```
-
-
-
+```
+- `model="cnn"`: Uses the CNN-based face detector for face localization.
+It is generally more accurate than `hog`, but slower on CPU.
+- `model="large"`: Uses the 68-point facial landmark model to generate 128-dimensional face encodings.
+The default `small` model uses 5 facial landmarks for faster encoding.
+- Euclidean face distance is calculated between the two face encodings.
+Smaller distances indicate greater facial similarity.
+```
 
 
 
