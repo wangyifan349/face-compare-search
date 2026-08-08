@@ -14,7 +14,7 @@ from starlette.requests import Request
 
 
 # ============================================================
-# 配置
+# Configuration
 # ============================================================
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -35,9 +35,9 @@ app = FastAPI(
 
 
 # ============================================================
-# 统一异常
-# DeepFace 在“没有检测到人脸”等输入问题上通常抛 ValueError。
-# 在这里统一转成 400，接口函数本身不再重复 try/except。
+# Centralized exception handling
+# DeepFace commonly raises ValueError for invalid inputs such as images with no detectable face.
+# Convert those errors to HTTP 400 here so individual API handlers do not repeat try/except blocks.
 # ============================================================
 
 @app.exception_handler(ValueError)
@@ -46,7 +46,7 @@ async def value_error_handler(_: Request, exc: ValueError):
 
 
 # ============================================================
-# 仅保留 3 个公共函数：编号校验、图片读取、人脸校验
+# Keep only three shared helpers: face ID validation, image decoding, and single-face validation.
 # ============================================================
 
 def validate_face_id(face_id: str) -> str:
@@ -246,9 +246,9 @@ def list_faces():
 
 
 # ============================================================
-# 前端
-# 所有页面 URL 返回同一份 HTML，由 pathname 决定显示哪个功能区。
-# 这样新增样式、导航、错误处理时只改一处。
+# Frontend
+# All page URLs return the same HTML document; location.pathname selects the active feature.
+# This keeps styling, navigation, and error-handling changes centralized in one place.
 # ============================================================
 
 APP_HTML = r'''<!doctype html>
