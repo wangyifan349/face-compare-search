@@ -37,10 +37,27 @@ TEMPORARY_IMAGE_DIRECTORY = DATA_DIRECTORY / "temporary_images"
 DATABASE_PATH = DATA_DIRECTORY / "face_library.sqlite3"
 
 ALLOWED_IMAGE_EXTENSIONS = {"jpg", "jpeg", "png", "webp"}
-FACE_DETECTION_MODEL = "cnn"  # 使用 CNN 人脸检测模型
-FACE_ENCODING_MODEL = "large"  # 使用 large 人脸特征模型
-FACE_LOCATION_UPSAMPLE_COUNT = 1
+
+import dlib
+print("dlib version:", dlib.__version__)
+print("DLIB_USE_CUDA:", dlib.DLIB_USE_CUDA)
+print("CUDA devices:", dlib.cuda.get_num_devices())
+#-------------------------------------
+# 使用 CNN 模型进行人脸检测。
+# 精度高于 HOG，但计算量更大；如果 dlib 支持 CUDA，可使用 GPU 加速。
+FACE_DETECTION_MODEL = "cnn"
+# 使用 large 模型提取人脸特征。
+# large 使用 68 个人脸关键点进行特征编码，精度更高，但速度比 small 稍慢。
+FACE_ENCODING_MODEL = "large"
+# 人脸检测前的上采样次数。
+# 设为 0 表示直接使用原始分辨率进行检测，不额外放大图片，可明显减少 CNN 检测耗时。
+# 如果设为 1，会在检测时将图像上采样一级，更容易检测很小的人脸，但速度会明显变慢。
+FACE_LOCATION_UPSAMPLE_COUNT = 0
+# 人脸编码时的抖动采样次数。
+# 设为 1 表示每张人脸只计算一次特征，速度最快。
+# 数值越大可能让特征更稳定，但会按次数明显增加计算时间。
 FACE_ENCODING_JITTER_COUNT = 1
+#-------------------------------------
 SEARCH_JOB_RETENTION_SECONDS = 3600
 SEARCH_RESULT_LIMIT = 20
 SEARCH_POLL_INTERVAL_MILLISECONDS = 500
