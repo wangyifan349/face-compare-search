@@ -249,6 +249,6 @@ If this project helps you, please consider sponsoring its development. Your supp
 ### ₿ Bitcoin Donation
 
 ```text
-bc1qymelsaghkfw992ee2tyzz0ph8xcy33u3gs7jl5
+bc1qwhzzk5tx07592vkf97rt8x8v0zdntad8lexnrgv3gdmecg8pfmhqzceedl
 ```
 Thank you for your support! ❤️
